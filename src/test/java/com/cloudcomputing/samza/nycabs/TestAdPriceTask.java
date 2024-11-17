@@ -48,7 +48,6 @@ public class TestAdPriceTask {
                 .addConfig("deploy.test", "true")
                 .run(Duration.ofSeconds(7));
 
-        System.out.println("AdClick file" + TestUtils.genStreamData("adClicked"));
         Assert.assertEquals(2, TestRunner.consumeStream(adPriceEvent, Duration.ofSeconds(7)).get(0).size());
         ListIterator<Object> resultIter = TestRunner.consumeStream(adPriceEvent, Duration.ofSeconds(7)).get(0).listIterator();
 
