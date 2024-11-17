@@ -78,7 +78,7 @@ public class AdPriceTask implements StreamTask, InitableTask {
         Map<String,Object> adClickData = (Map<String, Object>)envelope.getMessage();
         System.out.println("AdPriceTask.process. reaching here " + adClickData.toString());
         if (incomingStream.equals(AdPriceConfig.AD_CLICK_STREAM.getStream())) {
-
+            System.out.println("Inside If condition \n\n\n\n\n\n\n\n");
             int userId = (Integer) adClickData.get("userId");
             String storeId = (String) adClickData.get("storeId");
             boolean clicked = Boolean.parseBoolean((String) adClickData.get("clicked"));
@@ -105,7 +105,7 @@ public class AdPriceTask implements StreamTask, InitableTask {
             output.put("ad", adCompanyRevenue);
             output.put("cab", cabRevenue);
 
-            System.out.println("AdPrice Output reaching here " + output.toString());
+            System.out.println("AdPrice Output reaching here \n\n\n\n" + output.toString());
             // Send message to output stream
             collector.send(new OutgoingMessageEnvelope(
                     AdPriceConfig.AD_PRICE_STREAM,
