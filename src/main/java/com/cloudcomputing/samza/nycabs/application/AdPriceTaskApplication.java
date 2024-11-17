@@ -17,10 +17,11 @@ import java.util.Map;
 public class AdPriceTaskApplication implements TaskApplication {
     // Consider modify this zookeeper address, localhost may not be a good choice.
     // If this task application is executing in slave machine.
-    private static final List<String> KAFKA_CONSUMER_ZK_CONNECT = ImmutableList.of("localhost:2181");
+    private static final List<String> KAFKA_CONSUMER_ZK_CONNECT = ImmutableList.of("172-31-32-106:2181");
 
     // Consider modify the bootstrap servers address. This example only cover one address.
-    private static final List<String> KAFKA_PRODUCER_BOOTSTRAP_SERVERS = ImmutableList.of("localhost:9092");
+    private static final List<String> KAFKA_PRODUCER_BOOTSTRAP_SERVERS =
+            ImmutableList.of("172.31.32.66:9092,172.31.44.79:9092,172.31.32.106:9092");
     private static final Map<String, String> KAFKA_DEFAULT_STREAM_CONFIGS = ImmutableMap.of("replication.factor", "1");
 
     @Override
@@ -33,15 +34,15 @@ public class AdPriceTaskApplication implements TaskApplication {
 
         // Hint about streams, please refer to AdPriceConfig.java
         // We need one input stream "ad-click", one output stream "ad-price".
-       
 
-        // Define your input and output descriptor in here.
-        // Reference solution:
-        //  https://github.com/apache/samza-hello-samza/blob/master/src/main/java/samza/examples/wikipedia/task/application/WikipediaStatsTaskApplication.java
+        KafkaInputDescriptor adClickInput =
+                kafkaSystemDescriptor.getInputDescriptor("ad-click", new JsonSerde<>());
+        KafkaOutputDescriptor  adPriceOutput =
+                kafkaSystemDescriptor.getOutputDescriptor("ad-price", new JsonSerde<>());
 
-        // Bound you descriptor with your taskApplicationDescriptor in here.
-        // Please refer to the same link.
-
+        taskApplicationDescriptor.withDefaultSystem(kafkaSystemDescriptor);
+        taskApplicationDescriptor.withInputStream(adClickInput);
+        taskApplicationDescriptor.withOutputStream(adPriceOutput);
 
         taskApplicationDescriptor.withTaskFactory((StreamTaskFactory)() -> new AdPriceTask());
     }
