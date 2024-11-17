@@ -105,6 +105,7 @@ public class AdPriceTask implements StreamTask, InitableTask {
             output.put("ad", adCompanyRevenue);
             output.put("cab", cabRevenue);
 
+            System.out.println("AdPrice Output reaching here " + output.toString());
             // Send message to output stream
             collector.send(new OutgoingMessageEnvelope(
                     AdPriceConfig.AD_PRICE_STREAM,
