@@ -12,7 +12,6 @@ import org.apache.samza.task.TaskCoordinator;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -97,7 +96,7 @@ public class AdPriceTask implements StreamTask, InitableTask {
             }
 
             // Create output message
-            Map<String, Object> output= new HashMap<>();
+            Map<String, Object> output = new HashMap<>();
             output.put("userId", userId);
             output.put("storeId", storeId);
             output.put("ad", adCompanyRevenue);

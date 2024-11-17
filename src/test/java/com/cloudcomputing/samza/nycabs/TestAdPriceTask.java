@@ -25,7 +25,7 @@ public class TestAdPriceTask {
     InMemoryInputDescriptor adClickEvent;
     InMemoryOutputDescriptor adPriceEvent;
 
-    @Before public void setup(){
+    @Before public void setup() {
         confMap.put("stores.store-ads.factory", "org.apache.samza.storage.kv.RocksDbKeyValueStorageEngineFactory");
         confMap.put("stores.store-ads.key.serde", "string");
         confMap.put("stores.store-ads.msg.serde", "json");
