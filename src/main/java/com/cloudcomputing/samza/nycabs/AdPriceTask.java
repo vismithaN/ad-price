@@ -73,8 +73,10 @@ public class AdPriceTask implements StreamTask, InitableTask {
         approach that MapReduce sends all the key value pairs with the same key
         into the same reducer.
         */
+
         String incomingStream = envelope.getSystemStreamPartition().getStream();
         Map<String,Object> adClickData = (Map<String, Object>)envelope.getMessage();
+        System.out.println("AdPriceTask.process. reaching here " + adClickData.toString());
         if (incomingStream.equals(AdPriceConfig.AD_CLICK_STREAM.getStream())) {
 
             int userId = (Integer) adClickData.get("userId");
