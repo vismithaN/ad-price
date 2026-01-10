@@ -131,13 +131,11 @@ systems.kafka.producer.bootstrap.servers=ip-1-2-3-4.ec2.internal:9092,ip-5-6-7-8
 
 #### 2. `src/main/java/.../application/AdPriceTaskApplication.java`
 
-Update the Kafka connection details:
+If needed for local development, update the Kafka connection defaults in the application code. However, for production deployment, the values in `ad-price.properties` take precedence.
 
 ```java
-// ZooKeeper address
+// These are default values - override them in ad-price.properties for cluster deployment
 private static final List<String> KAFKA_CONSUMER_ZK_CONNECT = ImmutableList.of("localhost:2181");
-
-// Kafka broker addresses
 private static final List<String> KAFKA_PRODUCER_BOOTSTRAP_SERVERS = ImmutableList.of("localhost:9092");
 ```
 
@@ -241,14 +239,12 @@ The application produces revenue distribution data to the `ad-price` Kafka topic
 
 ### Static Data: NYCstoreAds.json
 
-Contains store information and ad pricing:
+Contains store information and ad pricing in newline-delimited JSON (NDJSON) format, with one JSON object per line:
 
 ```json
-{
-  "storeId": "H4jJ7XB3CetIr1pg56CczQ",
-  "name": "Levain Bakery",
-  "adPrice": 700
-}
+{"storeId": "H4jJ7XB3CetIr1pg56CczQ", "name": "Levain Bakery", "adPrice": 700}
+{"storeId": "xEnNFXtMLDF5kZDxfaCJgA", "name": "The Halal Guys", "adPrice": 400}
+{"storeId": "44SY464xDHbvOcjDzRbKkQ", "name": "Ippudo NY", "adPrice": 1000}
 ```
 
 Ad prices range from 100 to 1000 units per store.
